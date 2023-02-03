@@ -21,7 +21,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
         return navigateTo(defaultRoute);
       }
 
-      throw new Error(`State "${currentState.value}" is not expected`);
+      throw new Error(`State "${currentState.value}" is not expected, try removing path from URL and reloading the page`);
     }
   }
 });
