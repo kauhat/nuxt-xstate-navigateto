@@ -8,10 +8,10 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   // Register state machine transition listener...
   service.onTransition(async (state, event) => {
-    console.info(`Transition: ${event.type}`, event);
+    console.debug(`Transition: ${event.type}`, event);
 
     if (state.changed) {
-      console.info(`State has changed: ${state.value}`, state);
+      console.log(`State has changed: ${state.value}`, state);
     }
   });
 });

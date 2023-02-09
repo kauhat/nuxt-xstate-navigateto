@@ -26,7 +26,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     if (defaultRoute) {
       console.log('Attempting to navigate to new route...', { defaultRoute });
 
-      return router.replace(defaultRoute);
+      // return router.replace(defaultRoute);
 
       // Avoid calling navigateTo when middleware is running.
       // console.log(await waitForMiddleware());
@@ -48,28 +48,28 @@ export default defineNuxtPlugin((nuxtApp) => {
       }
 
       // Here's some various ways I tried to change the route..
-      return await Promise.any([
-        // Basic navigateTo()
-        navigateTo(defaultRoute),
+      // return await Promise.any([
+      //   // Basic navigateTo()
+      //   navigateTo(defaultRoute),
 
-        // Internal Nuxt helper
-        callWithNuxt(nuxtApp, navigateTo, [defaultRoute]),
+      //   // Internal Nuxt helper
+      //   callWithNuxt(nuxtApp, navigateTo, [defaultRoute]),
 
-        // Vue nextTick()
-        nextTick(async () => {
-          return await navigateTo(defaultRoute);
-        }),
+      //   // Vue nextTick()
+      //   nextTick(async () => {
+      //     return await navigateTo(defaultRoute);
+      //   }),
 
-        // Short delay (can work sometimes but is not reliable)
-        new Promise((resolve) =>
-          setTimeout(
-            () => {
-              navigateTo(defaultRoute);
-              resolve()
-            }
-            , 1000)
-        ),
-      ]);
+      //   // Short delay (can work sometimes but is not reliable)
+      //   new Promise((resolve) =>
+      //     setTimeout(
+      //       () => {
+      //         navigateTo(defaultRoute);
+      //         resolve()
+      //       }
+      //       , 1000)
+      //   ),
+      // ]);
     }
   });
 });

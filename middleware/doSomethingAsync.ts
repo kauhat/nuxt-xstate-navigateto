@@ -1,10 +1,16 @@
+import { useStateMachineStore } from "~~/stores/state";
+
 /**
  *
  */
 export default defineNuxtRouteMiddleware(async (to, from) => {
-    await new Promise(function(resolve) {
-      setTimeout(resolve, 500);
-    });
+  const { state } = useStateMachineStore()
 
-    console.log("Completed")
+  if (state.context.delayMiddleware) {
+    console.info("Pretending to do something while the page loads...")
+
+    await new Promise(function (resolve) {
+      setTimeout(resolve, 1000);
+    });
+  }
 });

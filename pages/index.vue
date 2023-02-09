@@ -1,7 +1,14 @@
 <template>
   <div style="background-color: red">
     <div class="min-h-[8rem] w-full max-w-md mx-auto">
-        <h1>Getting ready...</h1>
+      <h1>Getting ready...</h1>
+
+      <label>
+        <input type="checkbox" v-model="delayMiddleware">
+        Add delay to middleware
+      </label>
+
+      <button @click="startPaymentFlow">Start</button>
     </div>
   </div>
 </template>
@@ -14,8 +21,12 @@ definePageMeta({
   allowedStates: ['idle'],
 });
 
-// Sent the init event to the state machine...
-const { send } = useStateMachineStore();
+const delayMiddleware = ref(false)
 
-send('INIT', { });
+function startPaymentFlow() {
+  // Sent the init event to the state machine...
+  const { send } = useStateMachineStore();
+
+  send('START', {delayMiddleware: delayMiddleware.value});
+}
 </script>

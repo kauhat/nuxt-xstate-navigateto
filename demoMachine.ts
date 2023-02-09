@@ -1,7 +1,7 @@
 import { assign, createMachine } from 'xstate';
 
 function delay(millis = 1000) {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     setTimeout(resolve, millis);
   });
 }
@@ -18,11 +18,18 @@ export const demoMachine = createMachine<Context>(
     initial: 'idle',
     predictableActionArguments: true,
 
+    context: {
+      delayMiddleware: false
+    },
+
     states: {
       idle: {
         on: {
-          INIT: {
+          START: {
             target: 'checkingInitialDetails',
+            actions: assign({
+              delayMiddleware: (context, event) => event.delayMiddleware
+            }),
           },
         },
       },
@@ -72,11 +79,6 @@ export const demoMachine = createMachine<Context>(
           },
           onDone: {
             target: 'paymentCompleted',
-            actions: assign({
-              paymentIntent: (context, event) => {
-                return event.data.paymentIntent;
-              },
-            }),
           },
           onError: [
             {
