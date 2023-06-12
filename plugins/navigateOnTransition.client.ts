@@ -26,15 +26,11 @@ export default defineNuxtPlugin((nuxtApp) => {
     if (defaultRoute) {
       console.log('Attempting to navigate to new route...', { defaultRoute });
 
-      // return router.replace(defaultRoute);
-
       // Avoid calling navigateTo when middleware is running.
-      // console.log(await waitForMiddleware());
+      // await waitForMiddleware();
 
       // Check if current route is same as intended.
-      const route = useRoute();
-
-      console.debug('Checking route.');
+      const route = router.currentRoute.value
 
       if (route.name != defaultRoute.name) {
         console.warn(
@@ -43,8 +39,17 @@ export default defineNuxtPlugin((nuxtApp) => {
           )}`
         );
 
-        console.info('Navigating...');
-        return navigateTo(defaultRoute);
+        console.info('Navigating...', state.context);
+
+        if (state.context.useNavigateTo) {
+          console.log("Using `navigateTo()`")
+
+          return await navigateTo(defaultRoute);
+        } else {
+          console.log("Using `router.replace()`")
+
+          return await router.replace(defaultRoute)
+        }
       }
 
       // Here's some various ways I tried to change the route..

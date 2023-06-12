@@ -19,7 +19,8 @@ export const demoMachine = createMachine<Context>(
     predictableActionArguments: true,
 
     context: {
-      delayMiddleware: false
+      delayMiddleware: true,
+      useNavigateTo: true,
     },
 
     states: {
@@ -28,7 +29,8 @@ export const demoMachine = createMachine<Context>(
           START: {
             target: 'checkingInitialDetails',
             actions: assign({
-              delayMiddleware: (context, event) => event.delayMiddleware
+              delayMiddleware: (context, event) => event.delayMiddleware,
+              useNavigateTo: (context, event) => event.useNavigateTo,
             }),
           },
         },
